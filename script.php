@@ -11,6 +11,7 @@ if (isset($argv[1]) == false) {
 
 $csvFileName = $argv[1];
 
+//TODO: Move API key into an .env file
 $access_key = '5e90be9a0f67b9c14d10d78ee5dbd73b';
 $use_ssl = false; # Free plans are restricted to non-SSL only.
 
