@@ -21,7 +21,7 @@ $usdRate = $rates->getRate('USD');
 $jpyRate = $rates->getRate('JPY');
 
 $application = new \Boevsson\CommissionTask\Application();
-$application->addCurrency('EUR', '1');
+$application->addCurrency('EUR', 1);
 $application->addCurrency('USD', $usdRate);
 $application->addCurrency('JPY', $jpyRate);
 $application->setUp($csvFileName);
