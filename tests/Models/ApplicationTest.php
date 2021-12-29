@@ -129,7 +129,7 @@ class ApplicationTest extends TestCase
     public function dataProviderForProcessOperations(): array
     {
         $input1         = dirname(__DIR__) . '/fixtures/input.csv';
-        $commissionFees = ['0.60', '3.00', '0.00', '0.06', '1.50', '0.00', '0.70', '0.30', '0.30', '3.00', '0.00', '0.00', '8611.41'];
+        $commissionFees = [0.60, 3.00, 0.00, 0.06, 1.50, 0.00, 0.70, 0.30, 0.30, 3.00, 0.00, 0.00, 8611.41];
 
         return [
             [$input1, $commissionFees]
@@ -145,9 +145,9 @@ class ApplicationTest extends TestCase
     public function testProcessOperations(string $csvFileName, array $expectedCommissionFees)
     {
         $application = new Application();
-        $application->addCurrency('EUR', '1');
-        $application->addCurrency('USD', '1.1497');
-        $application->addCurrency('JPY', '129.53');
+        $application->addCurrency('EUR', 1.00);
+        $application->addCurrency('USD', 1.1497);
+        $application->addCurrency('JPY', 129.53);
         $application->setUp($csvFileName);
         $commissionFees = $application->processOperations();
 

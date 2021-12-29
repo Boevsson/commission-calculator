@@ -32,6 +32,6 @@ class PrivateUser extends User
 
     public function getFeeableAmount(float $amount): float
     {
-        return abs(($this->getWeeklyWithdrawFreeOfChargeAmount() - $amount));
+        return abs($this->getWeeklyWithdrawFreeOfChargeAmount() - $amount);
     }
 }

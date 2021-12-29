@@ -39,7 +39,7 @@ class CommissionCalculator
                 $this->resetUserWeeklyWithdrawFreeLimits($operation);
             }
 
-            $commissionFeeAmount    = number_format($operation->getCommissionFeeAmount(), 2, '.', '');
+            $commissionFeeAmount    = $operation->getCommissionFeeAmount();
             $this->commissionFees[] = $commissionFeeAmount;
 
             $operation->getUser()->setLastOperationDate($operation->getDate());

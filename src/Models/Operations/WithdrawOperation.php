@@ -8,27 +8,41 @@ class WithdrawOperation extends Operation
 {
     public function getCommissionFeeAmount(): float
     {
+        $rate = $this->getCurrency()->getRate();
+
+//        $rate = round($rate * 100) / 100;
+
         // Convert amount to Euro
-        $amountInEuro = $this->amount / $this->getCurrency()->getRate();
+        $amountInEuro = round($this->amount / $rate, 2);
 
         $feeableAmountInEuro = $this->getUser()->getFeeableAmount($amountInEuro);
 
         // Convert amount back to operation currency
-        $feeableAmount = $feeableAmountInEuro * $this->getCurrency()->getRate();
+        $feeableAmount = round($feeableAmountInEuro * $this->getCurrency()->getRate());
 
-        $feePercentage = $this->getUser()->getWithdrawCommissionFee($this);
+        $feeableAmountPennies = $feeableAmount * 100;
 
-        $commissionFeeAmount = ceil($feeableAmount * $feePercentage);
+        $fee = $this->getUser()->getWithdrawCommissionFee($this) / 100;
 
-        $commissionFeeAmount = $commissionFeeAmount / 100;
+        $commissionFeeAmountPennies = $feeableAmountPennies * $fee;
 
-        // Decrement user weekly withdraw free limits
-        $newWeeklyWithdrawFreeOfChargeAmount =  $this->getUser()->getWeeklyWithdrawFreeOfChargeAmount() - $amountInEuro;
+        $commissionFeeAmount = round($commissionFeeAmountPennies / 100, 2);
+
+        $this->decrementUserWeeklyWithdrawFreeLimits($amountInEuro);
+
+        return $commissionFeeAmount;
+    }
+
+    /**
+     * @param $amountInEuro
+     * @return void
+     */
+    private function decrementUserWeeklyWithdrawFreeLimits($amountInEuro): void
+    {
+        $newWeeklyWithdrawFreeOfChargeAmount = $this->getUser()->getWeeklyWithdrawFreeOfChargeAmount() - $amountInEuro;
         $this->getUser()->setWeeklyWithdrawFreeOfChargeAmount($newWeeklyWithdrawFreeOfChargeAmount);
 
         $newWeeklyWithdrawFreeOfChargeOperations = $this->getUser()->getWeeklyWithdrawFreeOfChargeOperations() - 1;
         $this->getUser()->setWeeklyWithdrawFreeOfChargeOperations($newWeeklyWithdrawFreeOfChargeOperations);
-
-        return $commissionFeeAmount;
     }
 }

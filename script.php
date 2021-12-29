@@ -29,5 +29,5 @@ $application->setUp($csvFileName);
 $commissionFees = $application->processOperations();
 
 foreach ($commissionFees as $commissionFee) {
-    echo $commissionFee . PHP_EOL;
+    echo number_format($commissionFee, 2, '.', '') . PHP_EOL;
 }
