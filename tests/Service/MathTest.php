@@ -62,8 +62,7 @@ class MathTest extends TestCase
     {
         return [
             'mul 2 natural numbers' => ['0', '0', '0.00'],
-//            'add negative number to a positive' => ['-1', '2', '1'],
-//            'add natural number to a float' => ['1', '1.05123', '2.05'],
+            'mul 1 natural and 1 float number' => ['1', '5.00', '5.00'],
         ];
     }
 }

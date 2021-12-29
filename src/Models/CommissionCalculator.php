@@ -39,16 +39,8 @@ class CommissionCalculator
                 $this->resetUserWeeklyWithdrawFreeLimits($operation);
             }
 
-            $commissionFeeAmount    = $operation->getCommissionFeeAmount();
+            $commissionFeeAmount    = number_format($operation->getCommissionFeeAmount(), 2, '.', '');
             $this->commissionFees[] = $commissionFeeAmount;
-
-//            $amountInEuro = $operation->getAmount() / $operation->getCurrency()->getRate();
-
-            // Decrement user weekly withdraw free limits
-//            $newWeeklyWithdrawFreeOfChargeAmount =  $operation->getUser()->getWeeklyWithdrawFreeOfChargeAmount() - $amountInEuro;
-//            $operation->getUser()->setWeeklyWithdrawFreeOfChargeAmount($newWeeklyWithdrawFreeOfChargeAmount);
-//            $newWeeklyWithdrawFreeOfChargeOperations = $operation->getUser()->getWeeklyWithdrawFreeOfChargeOperations() - 1;
-//            $operation->getUser()->setWeeklyWithdrawFreeOfChargeOperations($newWeeklyWithdrawFreeOfChargeOperations);
 
             $operation->getUser()->setLastOperationDate($operation->getDate());
         }
