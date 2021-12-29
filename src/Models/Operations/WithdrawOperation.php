@@ -13,7 +13,7 @@ class WithdrawOperation extends Operation
 //        $rate = round($rate * 100) / 100;
 
         // Convert amount to Euro
-        $amountInEuro = round($this->amount / $rate, 2);
+        $amountInEuro = round($this->amount / $rate);
 
         $feeableAmountInEuro = $this->getUser()->getFeeableAmount($amountInEuro);
 
@@ -27,6 +27,11 @@ class WithdrawOperation extends Operation
         $commissionFeeAmountPennies = $feeableAmountPennies * $fee;
 
         $commissionFeeAmount = round($commissionFeeAmountPennies / 100, 2);
+
+        if ($this->getCurrency()->getCode() != 'EUR' && $commissionFeeAmount > 1) {
+
+            $commissionFeeAmount = round($commissionFeeAmount);
+        }
 
         $this->decrementUserWeeklyWithdrawFreeLimits($amountInEuro);
 
