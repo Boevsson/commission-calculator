@@ -7,7 +7,7 @@ namespace Boevsson\CommissionTask\Models;
 use Boevsson\CommissionTask\Models\Operations\Operation;
 use Boevsson\CommissionTask\Service\DateService;
 
-class CommissionCalculator
+class CommissionCalculator extends Calculator
 {
     private array $operations;
     private array $commissionFees;

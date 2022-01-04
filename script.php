@@ -21,7 +21,9 @@ $rates  = $lookup->addRate('USD')->addRate('JPY')->setBaseCurrency('EUR')->fetch
 $usdRate = $rates->getRate('USD');
 $jpyRate = $rates->getRate('JPY');
 
-$application = new \Boevsson\CommissionTask\Application();
+$calculator = new \Boevsson\CommissionTask\Models\CommissionCalculator();
+
+$application = new \Boevsson\CommissionTask\Application($calculator);
 $application->addCurrency('EUR', 1);
 $application->addCurrency('USD', $usdRate);
 $application->addCurrency('JPY', $jpyRate);
