@@ -8,9 +8,9 @@ use Boevsson\CommissionTask\Models\Operations\Operation;
 
 class BusinessUser extends User
 {
-    public function __construct(int $id, float $weeklyWithdrawFreeOfChargeAmount = 0.00, int $weeklyWithdrawFreeOfChargeOperations = 0)
+    public function __construct(int $id)
     {
-        parent::__construct($id, 0.03, 0.5, $weeklyWithdrawFreeOfChargeAmount, $weeklyWithdrawFreeOfChargeOperations);
+        parent::__construct($id, 0.03, 0.5, 0.00, 0);
     }
 
     public function getWithdrawCommissionFee(Operation $operation): float
