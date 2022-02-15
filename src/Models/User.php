@@ -17,7 +17,7 @@ abstract class User
     protected int    $weeklyWithdrawFreeOfChargeOperations;
     protected string $lastOperationDate;
 
-    public function __construct(int $id, float $depositCommissionFee, float $withdrawCommissionFee, float $weeklyWithdrawFreeOfChargeAmount = 0, int $weeklyWithdrawFreeOfChargeOperations = 0)
+    public function __construct(int $id, float $depositCommissionFee, float $withdrawCommissionFee)
     {
         $this->id                                   = $id;
         $this->depositCommissionFee                 = $depositCommissionFee;
@@ -25,8 +25,8 @@ abstract class User
         $this->accounts                             = [];
         $this->operations                           = [];
         $this->lastOperationDate                    = '';
-        $this->weeklyWithdrawFreeOfChargeAmount     = $weeklyWithdrawFreeOfChargeAmount;
-        $this->weeklyWithdrawFreeOfChargeOperations = $weeklyWithdrawFreeOfChargeOperations;
+        $this->weeklyWithdrawFreeOfChargeAmount     = 0.00;
+        $this->weeklyWithdrawFreeOfChargeOperations = 0;
     }
 
     public function getId(): int

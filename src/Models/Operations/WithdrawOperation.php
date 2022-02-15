@@ -40,7 +40,6 @@ class WithdrawOperation extends Operation
 
     /**
      * @param $amountInEuro
-     * @return void
      */
     private function decrementUserWeeklyWithdrawFreeLimits($amountInEuro): void
     {

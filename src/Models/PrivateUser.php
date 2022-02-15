@@ -9,9 +9,9 @@ use Boevsson\CommissionTask\Service\DateService;
 
 class PrivateUser extends User
 {
-    public function __construct(int $id, float $weeklyWithdrawFreeOfChargeAmount = 1000, int $weeklyWithdrawFreeOfChargeOperations = 3)
+    public function __construct(int $id)
     {
-        parent::__construct($id, 0.03, 0.3, $weeklyWithdrawFreeOfChargeAmount, $weeklyWithdrawFreeOfChargeOperations);
+        parent::__construct($id, 0.03, 0.3, 1000, 3);
     }
 
     public function getWithdrawCommissionFee(Operation $operation): float

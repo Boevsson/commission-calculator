@@ -3,6 +3,7 @@
 include __DIR__ . '/vendor/autoload.php';
 
 use \BenMajor\ExchangeRatesAPI\ExchangeRatesAPI;
+use Boevsson\CommissionTask\Models\OperationHandler;
 
 if (isset($argv[1]) == false) {
     echo "Expects csv file name as parameter.";
@@ -11,6 +12,7 @@ if (isset($argv[1]) == false) {
 
 $csvFileName = $argv[1];
 
+//TODO: Move API key into an .env file
 $access_key = '5e90be9a0f67b9c14d10d78ee5dbd73b';
 $use_ssl = false; # Free plans are restricted to non-SSL only.
 
@@ -20,7 +22,9 @@ $rates  = $lookup->addRate('USD')->addRate('JPY')->setBaseCurrency('EUR')->fetch
 $usdRate = $rates->getRate('USD');
 $jpyRate = $rates->getRate('JPY');
 
-$application = new \Boevsson\CommissionTask\Application();
+$operationHandler = new OperationHandler(1000.00, 3);
+
+$application = new \Boevsson\CommissionTask\CommissionCalculator($operationHandler);
 $application->addCurrency('EUR', 1);
 $application->addCurrency('USD', $usdRate);
 $application->addCurrency('JPY', $jpyRate);

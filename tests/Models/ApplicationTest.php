@@ -3,6 +3,7 @@
 namespace Boevsson\CommissionTask\Tests\Models;
 
 use Boevsson\CommissionTask\Application;
+use Boevsson\CommissionTask\Models\CommissionCalculator;
 use Boevsson\CommissionTask\Models\Operations\Operation;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +25,9 @@ class ApplicationTest extends TestCase
      */
     public function testParseCsv(string $csvFileName)
     {
-        $application = new Application();
+        $calculator = new CommissionCalculator();
+
+        $application = new Application($calculator);
         $application->parseCsv($csvFileName);
 
         $operationsArray = $application->getOperationsArray();
@@ -53,7 +56,9 @@ class ApplicationTest extends TestCase
      */
     public function testSetUpUsers(string $csvFileName, int $expectedUsersCount)
     {
-        $application = new Application();
+        $calculator = new CommissionCalculator();
+
+        $application = new Application($calculator);
         $application->addCurrency('EUR', 1);
         $application->addCurrency('USD', 1.1497);
         $application->addCurrency('JPY', 129.53);
@@ -82,7 +87,9 @@ class ApplicationTest extends TestCase
      */
     public function testSetUpOperations(string $csvFileName, int $expectedOperationsCount)
     {
-        $application = new Application();
+        $calculator = new CommissionCalculator();
+
+        $application = new Application($calculator);
         $application->addCurrency('EUR', 1);
         $application->addCurrency('USD', 1.1497);
         $application->addCurrency('JPY', 129.53);
@@ -113,7 +120,9 @@ class ApplicationTest extends TestCase
      */
     public function testSetUp(string $csvFileName, int $expectedUsersCount, int $expectedOperationsCount)
     {
-        $application = new Application();
+        $calculator = new CommissionCalculator();
+
+        $application = new Application($calculator);
         $application->addCurrency('EUR', 1);
         $application->addCurrency('USD', 1.1497);
         $application->addCurrency('JPY', 129.53);
@@ -144,7 +153,9 @@ class ApplicationTest extends TestCase
      */
     public function testProcessOperations(string $csvFileName, array $expectedCommissionFees)
     {
-        $application = new Application();
+        $calculator = new CommissionCalculator();
+
+        $application = new Application($calculator);
         $application->addCurrency('EUR', 1.00);
         $application->addCurrency('USD', 1.1497);
         $application->addCurrency('JPY', 129.53);
