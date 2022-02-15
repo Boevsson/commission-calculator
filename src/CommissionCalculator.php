@@ -4,27 +4,25 @@ declare(strict_types=1);
 
 namespace Boevsson\CommissionTask;
 
+use Exception;
+use Boevsson\CommissionTask\Models\User;
 use Boevsson\CommissionTask\Models\Account;
-use Boevsson\CommissionTask\Models\CommissionCalculator;
+use Boevsson\CommissionTask\Models\UserFactory;
+use Boevsson\CommissionTask\Models\Interfaces\Handler;
 use Boevsson\CommissionTask\Models\Currencies\Currency;
 use Boevsson\CommissionTask\Models\Operations\OperationFactory;
-use Boevsson\CommissionTask\Models\User;
-use Boevsson\CommissionTask\Models\UserFactory;
-use Exception;
 
-class Application
+class CommissionCalculator
 {
     private array $operationsArray = [];
     private array $operations      = [];
     private array $users           = [];
     private array $currencies      = [];
-    private float $weeklyWithdrawFreeOfChargeAmountThreshold;
-    private int   $weeklyWithdrawFreeOfChargeOperationsCount;
+    private Handler $operationHandler;
 
-    public function __construct(float $weeklyWithdrawFreeOfChargeAmountThreshold = 1000.00, int $weeklyWithdrawFreeOfChargeOperationsCount = 3)
+    public function __construct(Handler $operationHandler)
     {
-        $this->weeklyWithdrawFreeOfChargeAmountThreshold = $weeklyWithdrawFreeOfChargeAmountThreshold;
-        $this->weeklyWithdrawFreeOfChargeOperationsCount = $weeklyWithdrawFreeOfChargeOperationsCount;
+        $this->operationHandler = $operationHandler;
     }
 
     /**
@@ -74,13 +72,11 @@ class Application
 
     public function processOperations(): array
     {
-        $commissionCalculator = new CommissionCalculator($this->weeklyWithdrawFreeOfChargeAmountThreshold, $this->weeklyWithdrawFreeOfChargeOperationsCount);
-
         foreach ($this->operations as $operation) {
-            $commissionCalculator->addOperation($operation);
+            $this->operationHandler->addOperation($operation);
         }
 
-        return $commissionCalculator->processOperations();
+        return $this->operationHandler->processOperations();
     }
 
     /**

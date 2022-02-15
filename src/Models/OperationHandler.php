@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Boevsson\CommissionTask\Models;
 
+use Boevsson\CommissionTask\Models\Interfaces\Handler;
 use Boevsson\CommissionTask\Models\Operations\Operation;
 use Boevsson\CommissionTask\Service\DateService;
 
-class CommissionCalculator
+class OperationHandler implements Handler
 {
     private array $operations;
     private array $commissionFees;
